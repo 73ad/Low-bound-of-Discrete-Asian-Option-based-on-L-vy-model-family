@@ -1,0 +1,33 @@
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//  UAModelVG.cpp
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+#include "UAModelVG.h"
+#include "Input.h"
+
+#include <cmath>
+#include <iostream>
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//    constructor
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+UAModelVG::UAModelVG(Input & inp)
+	: sigma_(inp.Getvg_sig())
+	, T_(inp.GetT())
+	, N_(inp.GetN())
+	, theta_(inp.Getvg_theta())
+	, v_(inp.Getvg_v())
+{
+	delta_0_ = T_ / (double)N_;
+}
+
+std::complex<double> UAModelVG::Model(std::complex<double> u, double v) const
+{
+	//std::cout<<"gau"<<std::endl;
+	std::complex<double>i(0.0, 1);
+	return -delta_0_ / v_ * log(1.0 - theta_ * u * v_*i+v_*sigma_*sigma_*u*u*0.5);
+}
+
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//    end
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
